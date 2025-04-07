@@ -17,7 +17,7 @@ class PostController extends Controller
     public function index()
     {
         return view('backend.post.index')
-                    ->with('posts', Post::paginate(10));
+                    ->with('posts', Post::orderby('created_at', 'DESC')->paginate(10));
     }
 
     /**
@@ -106,5 +106,22 @@ class PostController extends Controller
     {
         $post->delete();
         return "success";
+    }
+
+    public function trash() {
+        return view('backend.post.trash')
+                    ->with('posts', Post::onlyTrashed()->paginate(10));
+    }
+
+    public function delete($id) {
+        $post = Post::withTrashed()->where('id', $id)->first();
+        $post->forceDelete();
+        return 'success';
+    }
+
+    public function restore($id) {
+        $post = Post::withTrashed()->where('id', $id)->first();
+        $post->restore();
+        return redirect()->route('post.index');
     }
 }

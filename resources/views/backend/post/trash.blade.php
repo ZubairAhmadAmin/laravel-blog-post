@@ -11,10 +11,6 @@
             <div class="card-header py-3">
                 <h3 class="m-0 font-weight-bold text-primary">
                     Post
-                    <a class="btn btn-primary float-right" href="{{route('post.create')}}">Add Post</a>
-                    <br>
-                    <br>
-                    <a class="btn btn-danger float-right" href="{{route('post.trash')}}">Trash</a>
                 </h3>
             </div>
             <div class="card-body">
@@ -46,7 +42,7 @@
                                 <td>{{$post->sub_title}}</td>
                                 <td>
                                     <a href="#" class="delete" id="{{$post->id}}"><i class="fas fa-trash"></i></a> |
-                                    <a href="{{route('post.edit', ['post'=>$post->id])}}"><i class="fas fa-edit"></i></a>
+                                    <a href="{{route('post.restore', ['id'=>$post->id])}}"><i class="fas fa-undo"></i></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -71,7 +67,7 @@
     $('.delete').click(function() {
         Swal.fire({
             title: "Are you sure?",
-            text: "You will be able to revert this!",
+            text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -81,7 +77,7 @@
             if (result.isConfirmed) {
 
                 var id = $(this).attr('id');
-                var url = 'post/' + id;
+                var url = 'force-delete/' + id;
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
