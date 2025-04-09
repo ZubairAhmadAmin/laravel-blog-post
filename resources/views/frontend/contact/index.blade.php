@@ -21,14 +21,16 @@
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <p>Want to get in touch? Fill out the form below to send me a message and I will get back to you as soon as possible!</p>
+                @if($setting->email)
+                <h4><span> Email : </span>{{$setting->email}}</h4>
+                @endif
+                @if($setting->phone)
+                <h4><span> Phone : </span>{{$setting->phone}}</h4>
+                @endif
+                @if($setting->address)
+                <h4><span> Address : </span>{{$setting->address}}</h4>
+                @endif
                 <div class="my-5">
-                    <!-- * * * * * * * * * * * * * * *-->
-                    <!-- * * SB Forms Contact Form * *-->
-                    <!-- * * * * * * * * * * * * * * *-->
-                    <!-- This form is pre-integrated with SB Forms.-->
-                    <!-- To make this form functional, sign up at-->
-                    <!-- https://startbootstrap.com/solution/contact-forms-->
-                    <!-- to get an API token!-->
                     <form id="contactForm" action="{{route('send')}}" method="post" data-sb-form-api-token="API_TOKEN">
                         @csrf
                         <div class="form-floating">
