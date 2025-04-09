@@ -17,7 +17,7 @@ class PostController extends Controller
     public function index()
     {
         return view('backend.post.index')
-                    ->with('posts', Post::orderby('created_at', 'DESC')->paginate(10));
+                    ->with('posts', Post::orderby('created_at', 'DESC')->where('lang', app()->getLocale())->paginate(10));
     }
 
     /**
@@ -44,7 +44,7 @@ class PostController extends Controller
             'description' => 'required'
         ]);
 
-        Post::create(['title'=>$request->title, 'sub_title'=>$request->sub_title, 'description'=>$request->description, 'slug'=>Str()->slug($request->title)]);
+        Post::create(['title'=>$request->title, 'sub_title'=>$request->sub_title, 'description'=>strip_tags($request->description), 'slug'=>Str()->slug($request->title), 'lang'=>app()->getLocale()]);
 
         return redirect()->route('post.index')->with('success', 'Createed Successfully!');
     }

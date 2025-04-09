@@ -9,6 +9,7 @@ use App\Http\Controllers\frontend\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\SettingMiddleware;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,13 @@ Route::get('/about', [FrontendAboutController::class, 'index'])->name('about');
 
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
-Route::post('contact', [ContactController::class, 'send'])->name('send');
+Route::post('/contact', [ContactController::class, 'send'])->name('send');
+
+Route::get('/locale/{locale}', function ($locale) {
+    app()->setlocale($locale);
+    Session::put('locale', $locale);
+    return redirect()->back();
+})->name('locale');
 
 
 Route::middleware('auth')->group(function () {
