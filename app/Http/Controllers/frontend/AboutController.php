@@ -11,7 +11,6 @@ class AboutController extends Controller
 {
     public function index () {
         return view('frontend.about.index')
-                    ->with('about', About::first())
-                    ->with('setting', Setting::first());
+                    ->with('about', About::first());
     }
 }

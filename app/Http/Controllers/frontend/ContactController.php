@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\Session;
 class ContactController extends Controller
 {
     public function index() {
-        return view('frontend.contact.index')
-                    ->with('setting', Setting::first());
+        return view('frontend.contact.index');
     }
 
     public function send(Request $request) {
