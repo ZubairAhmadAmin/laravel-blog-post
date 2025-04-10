@@ -3,6 +3,7 @@
 use App\Http\Controllers\backend\AboutController;
 use App\Http\Controllers\backend\PostController;
 use App\Http\Controllers\backend\SettingController;
+use App\Http\Controllers\backend\UserController;
 use App\Http\Controllers\frontend\AboutController as FrontendAboutController;
 use App\Http\Controllers\frontend\ContactController;
 use App\Http\Controllers\frontend\HomeController;
@@ -55,6 +56,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('setting', [SettingController::class, 'index'])->name('setting.index');
     Route::post('setting', [SettingController::class, 'store'])->name('setting.store');
+
+    Route::resource('user', UserController::class);
 
 });
 

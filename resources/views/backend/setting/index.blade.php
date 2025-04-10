@@ -14,14 +14,14 @@
                 <form action="{{route('setting.store')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label for="title" class="form-lablel">Logo</label>
+                        <label for="logo" class="form-lablel">Logo</label>
                         <div class="input-group">
                             <span class="input-group-btn">
                                 <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
                                     <i class="fa fa-picture-o"></i> Choose
                                 </a>
                             </span>
-                            <input id="thumbnail" class="form-control" type="text" value="{{$setting->logo}}" name="logo" placeholder="Enter website logo">
+                            <input id="thumbnail" class="form-control" type="text" value="{{$setting->logo}}" name="logo" placeholder="Choose website logo">
                         </div>
                         <div id="holder" style="margin-top:15px;max-height:100px;"></div>
                         @error('logo')
