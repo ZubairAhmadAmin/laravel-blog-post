@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('sub_title');
             $table->text('description');
             $table->string('slug');
+            $table->unsignedBigInteger('profile_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

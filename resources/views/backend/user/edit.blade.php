@@ -29,6 +29,17 @@
                         @enderror
                     </div>
                     <div class="form-group">
+                        <label for="confirm_password" class="form-lablel">User Role</label>
+                        <select id="role" name="user_role" class="form-control">
+                        <option value="admin" {{$user->user_role == 'admin' ? 'selected' : ''}}>Admin</option>
+                        <option value="editor " {{$user->user_role == 'editor' ? 'selected' : ''}}>Editor</option>
+                        <option value="staff" {{$user->user_role == 'staff' ? 'selected' : ''}}>Staff</option>
+                        </select>
+                        @error('user_role')
+                        <p class="text-danger">{{$message}}</p>
+                        @enderror
+                    </div>
+                    <div class="form-group">
                         <label for="avatar" class="form-lablel">Profile</label>
                         <div class="input-group">
                             <span class="input-group-btn">
@@ -36,15 +47,12 @@
                                     <i class="fa fa-picture-o"></i> Choose
                                 </a>
                             </span>
-                            <input id="thumbnail" class="form-control" type="text" name="avatar" value="{{$user->profile->avatar}}">
+                            <input id="thumbnail" class="form-control" type="text" name="avatar" value="{{ $user->profile ? $user->profile->avatar : '' }}">
                         </div>
                         <div id="holder" style="margin-top:15px;max-height:100px;"></div>
-                        @error('avatar')
-                        <p class="text-danger">{{$message}}</p>
-                        @enderror
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-success float-right">Save</button>
+                        <button type="submit" class="btn btn-success float-right">Update</button>
                     </div>
                 </form>
             </div>

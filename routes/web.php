@@ -9,6 +9,11 @@ use App\Http\Controllers\frontend\ContactController;
 use App\Http\Controllers\frontend\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\SettingMiddleware;
+use App\Models\Post;
+use App\Models\Profile;
+use App\Models\Topic;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -54,10 +59,23 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/about', [AboutController::class, 'index'])->name('about.index');
     Route::post('admin/about', [AboutController::class, 'store'])->name('about.store');
 
-    Route::get('setting', [SettingController::class, 'index'])->name('setting.index');
-    Route::post('setting', [SettingController::class, 'store'])->name('setting.store');
+    Route::get('setting', [SettingController::class, 'index'])->name('setting.index')->middleware('can:isAdmin');
+    Route::post('setting', [SettingController::class, 'store'])->name('setting.store')->middleware('can:isAdmin');
 
-    Route::resource('user', UserController::class);
+    Route::resource('user', UserController::class)->middleware('can:isAdmin');
+
+    // Route::get('/test', function() {
+    //     return Post::find(2)->->user->name;
+    // });
+
+    // $post = DB::table('posts')
+    //     ->Join('profiles', 'posts.profile_id', 'profile_id') 
+    //     ->join('users', 'profiles.user_id', 'user_id') 
+    //     ->select('posts.*', 'profiles.avatar as picture', 'users.name as username')
+    //     ->orderBy('posts.id', 'ASC')  
+    //     ->get();
+    // dd($post);
+
 
 });
 

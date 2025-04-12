@@ -72,17 +72,21 @@
                     <span>About</span></a>
             </li>
             <!-- Nav Item - User -->
+             @can('isAdmin')
             <li class="nav-item">
                 <a class="nav-link" href="{{route('user.index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>User</span></a>
             </li>
+            @endcan
             <!-- Nav Item - Setting -->
+             @can('isAdmin')
             <li class="nav-item">
                 <a class="nav-link" href="{{route('setting.index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Setting</span></a>
             </li>
+            @endcan
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -126,7 +130,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                                 <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                    src="">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

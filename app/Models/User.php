@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Profile;
 
 class User extends Authenticatable
 {
@@ -18,16 +19,21 @@ class User extends Authenticatable
      * @var array<int, string>
      */
 
-     public function profile()
-     {
-         return $this->hasOne(Profile::class);
-     }  
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+    public function posts() {
+        return $this->hasManyThrough(Post::class, Profile::class);
+    }
 
     protected $fillable = [
         'name',
         'email',
         'password',
-        'profile'
+        'user_role',
+        'avatar'
     ];
 
     /**

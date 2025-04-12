@@ -46,6 +46,7 @@ class UserController extends Controller
             'email' => 'required | email',
             'password' => 'required | min:6',
             'confirm_password' => 'required | same:password',
+            'user_role' => 'required',
             'avatar' => 'required',
         ]);
 
@@ -53,12 +54,15 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->user_role = $request->user_role;
         $user->save();
 
         $profile = new Profile();
         $profile->avatar = $request->avatar;
         $profile->user_id = $user->id;
         $profile->save();
+
+        $profile->image()->create(['image'=>$request->avatar]);
 
         Session::flash('success', 'User create successfully!');
 
@@ -101,12 +105,12 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'profile.avatar' => 'nullable|image|max:2048', // optional image upload
         ]);
     
         // Update user basic fields
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->user_role = $request->user_role;
         $user->save();
     
         // Update avatar if uploaded

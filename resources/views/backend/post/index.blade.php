@@ -14,9 +14,14 @@
                     <a class="btn btn-primary float-right" href="{{route('post.create')}}">Add Post</a>
                     <br>
                     <br>
+                    @can('forceDelete', App\Models\Post::class)
                     <a class="btn btn-danger float-right" href="{{route('post.trash')}}">Trash</a>
+                    @endcan
                 </h3>
             </div>
+            @php
+                $user = auth()->user();
+            @endphp
             <div class="card-body">
                 <div>
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -25,7 +30,10 @@
                                 <th>No</th>
                                 <th>Title</th>
                                 <th>Sub Title</th>
-                                <th>Action</th>
+                                <th>Author</th>
+                                @if(in_array($user->user_role, ['admin', 'editor']))
+                                    <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <!-- <tfoot>
@@ -44,9 +52,19 @@
                                 <td>{{($posts->currentPage() * 10) - 10 + $index + 1}}</td>
                                 <td>{{$post->title}}</td>
                                 <td>{{$post->sub_title}}</td>
-                                <td>
+                                <td>@if($post->profile && $post->profile->user)
+                                        {{ $post->profile->user->name }}
+                                    @else
+                                        <em>No user</em>
+                                    @endif
+                                </td>
+                                <td>    
+                                    @can('delete', $post)
                                     <a href="#" class="delete" id="{{$post->id}}"><i class="fas fa-trash"></i></a> |
+                                    @endcan
+                                    @can('update', $post)
                                     <a href="{{route('post.edit', ['post'=>$post->id])}}"><i class="fas fa-edit"></i></a>
+                                    @endcan
                                 </td>
                             </tr>
                             @endforeach

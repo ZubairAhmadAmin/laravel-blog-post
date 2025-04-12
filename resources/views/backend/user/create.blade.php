@@ -42,6 +42,17 @@
                         @enderror
                     </div>
                     <div class="form-group">
+                        <label for="confirm_password" class="form-lablel">User Role</label>
+                        <select id="role" name="user_role" class="form-control">
+                        <option value="admin">Admin</option>
+                        <option value="editor">Editor</option>
+                        <option value="staff">Staff</option>
+                        </select>
+                        @error('user_role')
+                        <p class="text-danger">{{$message}}</p>
+                        @enderror
+                    </div>
+                    <div class="form-group">
                         <label for="avatar" class="form-lablel">Profile</label>
                         <div class="input-group">
                             <span class="input-group-btn">

@@ -9,5 +9,9 @@ class Setting extends Model
 {
     use HasFactory;
 
+    public function image() {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
     protected $fillable = ['logo', 'facebook', 'twitter', 'email', 'phone', 'address'];
 }

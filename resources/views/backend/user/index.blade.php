@@ -24,6 +24,7 @@
                                 <th>No</th>
                                 <th>Name</th>
                                 <th>Email</th>
+                                <th>Role</th>
                                 <th>Profile Picture</th>
                                 <th>Action</th>
                             </tr>
@@ -44,6 +45,7 @@
                                 <td>{{$index + 1}}</td>
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->email}}</td>
+                                <td>{{$user->user_role}}</td>
                                 <td>{{optional($user->profile)->avatar}}</td>
                                 <td>
                                     <a href="#" class="delete" id="{{$user->id}}"><i class="fas fa-trash"></i></a> |

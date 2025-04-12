@@ -23,9 +23,30 @@
                     <div class="form-group">
                         <label for="sub_title" class="form-lablel">Sub Title</label>
                         <input type="text" name="sub_title" class="form-control" placeholder="Enter post sub title">
-                        @error('sub_title')
-                        <p class="text-danger">{{$message}}</p>
-                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="image1" class="form-lablel">Image 1</label>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <a data-input="thumbnail" data-preview="holder" class="btn btn-primary lfm">
+                                    <i class="fa fa-picture-o"></i> Choose
+                                </a>
+                            </span>
+                            <input id="thumbnail" class="form-control" type="text" name="image[]" placeholder="Choose image">
+                        </div>
+                        <div id="holder" style="margin-top:15px;max-height:100px;"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="image2" class="form-lablel">Image 2</label>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <a data-input="thumbnail2" data-preview="holder" class="btn btn-primary lfm">
+                                    <i class="fa fa-picture-o"></i> Choose
+                                </a>
+                            </span>
+                            <input id="thumbnail2" class="form-control" type="text" name="image[]" placeholder="Choose image">
+                        </div>
+                        <div id="holder" style="margin-top:15px;max-height:100px;"></div>
                     </div>
                     <div class="form-group">
                         <label for="description" class="form-lablel">Description</label>
@@ -33,6 +54,13 @@
                         @error('description')
                         <p class="text-danger">{{$message}}</p>
                         @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="topic">Topics:</label><br>
+                        @foreach($topics as $topic)
+                            <b>{{$topic->title}}</b>
+                            <input type="checkbox" class="mr-2" value="{{$topic->id}}" name="topic[]">
+                        @endforeach
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-success float-right">Save</button>
@@ -44,5 +72,16 @@
     </div>
     <!-- /.container-fluid -->
 </div>
+
+@endsection
+
+
+@section('script')
+
+<script src="{{asset('/vendor/laravel-filemanager/js/stand-alone-button.js')}}"></script>
+
+<script>
+    $('.lfm').filemanager('image');
+</script>
 
 @endsection
