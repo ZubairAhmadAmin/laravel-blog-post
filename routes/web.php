@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\backend\AboutController;
 use App\Http\Controllers\backend\PostController;
+use App\Http\Controllers\backend\RoleController;
 use App\Http\Controllers\backend\SettingController;
 use App\Http\Controllers\backend\UserController;
 use App\Http\Controllers\frontend\AboutController as FrontendAboutController;
@@ -64,17 +65,12 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('user', UserController::class)->middleware('can:isAdmin');
 
+    Route::resource('role', RoleController::class);
+    Route::post('assign/{role}', [RoleController::class, 'assign'])->name('role.assign');
+
     // Route::get('/test', function() {
     //     return Post::find(2)->->user->name;
     // });
-
-    // $post = DB::table('posts')
-    //     ->Join('profiles', 'posts.profile_id', 'profile_id') 
-    //     ->join('users', 'profiles.user_id', 'user_id') 
-    //     ->select('posts.*', 'profiles.avatar as picture', 'users.name as username')
-    //     ->orderBy('posts.id', 'ASC')  
-    //     ->get();
-    // dd($post);
 
 
 });

@@ -87,6 +87,14 @@
                     <span>Setting</span></a>
             </li>
             @endcan
+            <!-- Nav Item - Role -->
+             @can('isAdmin')
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('role.index')}}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Role</span></a>
+            </li>
+            @endcan
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -123,15 +131,20 @@
                             </a>
 
                             <div class="topbar-divider d-none d-sm-block"></div>
-
+                        @php
+                            $user = auth()->user();
+                        @endphp
                             <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="">
-                            </a>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{$user->name}}</span>
+                                @if($user->profile && $user->profile->avatar)
+                                    <img src="{{ asset('storage/' . $user->profile->avatar) }}" class="card-img-top rounded-circle" alt="Profile Picture" style="height: 100px; width: 100px; object-fit: cover;">
+                                @else
+                                    <img src="{{ asset('images/default-profile.png') }}" class="card-img-top rounded-circle" alt="Default Picture" style="height: 100px; width: 100px; object-fit: cover;">
+                                @endif
+                                                        </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
