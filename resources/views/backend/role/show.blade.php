@@ -11,13 +11,15 @@
                 <h3 class="m-0 font-weight-bold text-primary">Assign Permission</h3>
             </div>
             <div class="card-body">
-                <form action="{{route('role.assign', ['role'=>$role_id])}}" method="post">
+                <form action="{{route('role.assign', ['role'=>$role->id])}}" method="post">
                     @csrf
                     <div class="row">
                         @foreach($permissions as $permission)
                         <div class="col-md-3">
                             <span class="mr-2">{{$permission->name}}</span>
-                            <input type="checkbox" class="checkbox" value="{{$permission->id}}" name="permission[]"><br><br>
+                            <input type="checkbox" class="checkbox" value="{{$permission->id}}" name="permission[]"
+                                {{ $role->permissions->contains($permission->id) ? 'checked' : '' }}
+                            ><br><br>
                         </div>
                         @endforeach
                     </div>

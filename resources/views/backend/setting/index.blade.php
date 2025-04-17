@@ -11,7 +11,7 @@
                 <h3 class="m-0 font-weight-bold text-primary">Setting</h3>
             </div>
             <div class="card-body">
-                <form action="{{route('setting.store')}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('setting.update')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="logo" class="form-lablel">Logo</label>
@@ -51,7 +51,7 @@
                     </div>
                     <div class="form-group">
                         <label for="phone" class="form-lablel">Phone</label>
-                        <input type="text" vvalue="{{$setting->phone}}" name="phone" class="form-control" placeholder="Enter website phone number">
+                        <input type="text" value="{{$setting->phone}}" name="phone" class="form-control" placeholder="Enter website phone number">
                         @error('phone')
                         <p class="text-danger">{{$message}}</p>
                         @enderror
@@ -64,7 +64,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-success float-right">Save</button>
+                        <button type="submit" class="btn btn-success float-right">Update</button>
                     </div>
 
                 </form>

@@ -14,7 +14,7 @@ class SettingController extends Controller
                     ->with('setting', Setting::first());
     }
 
-    public function store(Request $request) {
+    public function update(Request $request) {
         $request->validate([
             'logo' => 'required',
             'facebook' => 'nullable | url',

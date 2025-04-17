@@ -15,7 +15,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="name" class="form-lablel">Name</label>
-                        <input type="text" name="name" class="form-control" placeholder="Enter post name">
+                        <input type="text" name="name" class="form-control" placeholder="Enter role name">
                         @error('name')
                         <p class="text-danger">{{$message}}</p>
                         @enderror

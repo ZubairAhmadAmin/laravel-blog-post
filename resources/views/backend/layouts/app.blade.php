@@ -66,35 +66,37 @@
                     <span>Post</span></a>
             </li>
             <!-- Nav Item - About -->
+            @if(auth()->user()->role->hasPermission('about view'))
             <li class="nav-item">
                 <a class="nav-link" href="{{route('about.index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>About</span></a>
             </li>
+            @endif
             <!-- Nav Item - User -->
-             @can('isAdmin')
+            @if(auth()->user()->role->hasPermission('user view'))
             <li class="nav-item">
                 <a class="nav-link" href="{{route('user.index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>User</span></a>
             </li>
-            @endcan
+            @endif
             <!-- Nav Item - Setting -->
-             @can('isAdmin')
+            @if(auth()->user()->role->hasPermission('setting view'))
             <li class="nav-item">
                 <a class="nav-link" href="{{route('setting.index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Setting</span></a>
             </li>
-            @endcan
+            @endif
             <!-- Nav Item - Role -->
-             @can('isAdmin')
+            @if(auth()->user()->role->hasPermission('role view'))
             <li class="nav-item">
                 <a class="nav-link" href="{{route('role.index')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Role</span></a>
             </li>
-            @endcan
+            @endif
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 

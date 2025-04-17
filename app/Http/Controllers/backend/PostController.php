@@ -11,6 +11,16 @@ use Illuminate\Support\Facades\Session;
 
 class PostController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:post view', ['only'=>['index', 'show']]);
+        $this->middleware('permission:post create', ['only'=>['create', 'store']]);
+        $this->middleware('permission:post update', ['only'=>['edit', 'update']]);
+        $this->middleware('permission:post delete', ['only'=>['destroy', 'delete', 'restore', 'trash']]);
+        
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -92,7 +102,6 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $this->authorize('update', $post);
         $request->validate([
             'title' => 'required | max:50',
             'sub_title' => 'required | max:50',
@@ -118,14 +127,12 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $this->authorize('delete', $post);
 
         $post->delete();
         return "success";
     }
 
     public function trash() {
-        $this->authorize('forceDelete', Post::class);
         return view('backend.post.trash')
                     ->with('posts', Post::onlyTrashed()->paginate(10));
     }
@@ -137,7 +144,6 @@ class PostController extends Controller
     }
 
     public function restore($id) {
-        $this->authorize('restore');
         $post = Post::withTrashed()->where('id', $id)->first();
         $post->restore();
         return redirect()->route('post.index');

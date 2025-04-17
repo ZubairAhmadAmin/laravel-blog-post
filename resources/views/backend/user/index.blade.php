@@ -10,8 +10,10 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h3 class="m-0 font-weight-bold text-primary">
-                    User
+                    Users
+                    @if(auth()->user()->role->hasPermission('user create'))
                     <a class="btn btn-primary float-right" href="{{route('user.create')}}">Add User</a>
+                    @endif
                     <br>
                     <br>
                 </h3>
@@ -26,7 +28,9 @@
                                 <th>Email</th>
                                 <th>Role</th>
                                 <th>Profile Picture</th>
+                                @if(auth()->user()->role->hasAnyPermission(['user update', 'user delete']))
                                 <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <!-- <tfoot>
@@ -45,11 +49,15 @@
                                 <td>{{$index + 1}}</td>
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->email}}</td>
-                                <td>{{$user->user_role}}</td>
+                                <td>{{ucfirst($user->role ? $user->role->name : 'No Role')}}</td>
                                 <td>{{optional($user->profile)->avatar}}</td>
                                 <td>
-                                    <a href="#" class="delete" id="{{$user->id}}"><i class="fas fa-trash"></i></a> |
+                                    @if(auth()->user()->role->hasPermission('user delete'))
+                                    <a href="#" class="delete" id="{{$user->id}}"><i class="fas fa-trash"></i></a>
+                                    @endif
+                                    @if(auth()->user()->role->hasPermission('user update'))
                                     <a href="{{route('user.edit', ['user'=>$user->id])}}"><i class="fas fa-edit"></i></a>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

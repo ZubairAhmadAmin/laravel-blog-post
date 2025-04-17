@@ -52,26 +52,25 @@ Route::middleware('auth')->group(function () {
         return view('backend.dashboard.index');
     })->name('dashboard');
 
-    Route::resource('post', PostController::class);
+    Route::resource('post', PostController::class)->middleware('permission:post view');
     Route::get('trash', [PostController::class, 'trash'])->name('post.trash');
     Route::delete('force-delete/{id}', [PostController::class, 'delete'])->name('post.force-delete');
     Route::get('restore/{id}', [PostController::class, 'restore'])->name('post.restore');
 
-    Route::get('admin/about', [AboutController::class, 'index'])->name('about.index');
-    Route::post('admin/about', [AboutController::class, 'store'])->name('about.store');
+    Route::get('admin/about', [AboutController::class, 'index'])->name('about.index')->middleware('permission:about view');
+    Route::post('admin/about', [AboutController::class, 'update'])->name('about.update')->middleware('permission:about update');
 
-    Route::get('setting', [SettingController::class, 'index'])->name('setting.index')->middleware('can:isAdmin');
-    Route::post('setting', [SettingController::class, 'store'])->name('setting.store')->middleware('can:isAdmin');
+    Route::get('setting', [SettingController::class, 'index'])->name('setting.index')->middleware('permission:setting view');
+    Route::post('setting', [SettingController::class, 'update'])->name('setting.update')->middleware('permission:setting update');
 
-    Route::resource('user', UserController::class)->middleware('can:isAdmin');
+    Route::resource('user', UserController::class)->middleware('permission:user view');
 
-    Route::resource('role', RoleController::class);
-    Route::post('assign/{role}', [RoleController::class, 'assign'])->name('role.assign');
+    Route::resource('role', RoleController::class)->middleware('permission:role view');
+    Route::post('permission/{role}', [RoleController::class, 'assignPermission'])->name('role.assign');
 
     // Route::get('/test', function() {
     //     return Post::find(2)->->user->name;
     // });
-
 
 });
 

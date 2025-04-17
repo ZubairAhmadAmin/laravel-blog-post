@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Session;
 
 class RoleController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('permission:role create', ['only'=>['create', 'store', 'assignPermission']]);
+        $this->middleware('permission:role update', ['only'=>['edit', 'update']]);
+        $this->middleware('permission:role delete', ['only'=>['destroy']]);
+        $this->middleware('permission:role show', ['only'=>['show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -57,9 +65,13 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        return view('backend.role.show')
-                    ->with('permissions', Permission::all())
-                    ->with('role_id', $id);
+        $role = Role::findOrFail($id); // get the specific role
+
+        return view('backend.role.show', [
+            'permissions' => Permission::all(),
+            'role' => $role, // pass the role object
+            'roles' => Role::all(),
+        ]);
     }
 
     /**
@@ -107,13 +119,17 @@ class RoleController extends Controller
         return "success";
     }
 
-    public function assign(Request $request, $role_id) {
-        $request->validate([
-            'permission' => 'required | array',
-        ]);
-        $role = Role::find($role_id);
-        $role->permissions()->attach($request->permission);
+    public function assignPermission(Request $request, $roleId)
+{
+    $role = Role::findOrFail($roleId);
 
-        return redirect()->route('role.index');
-    }
+    // If checkboxes are empty (all unchecked), this will remove all permissions
+    $permissionIds = $request->input('permission', []); // default to empty array
+
+    // Sync permissions - assign selected, remove unselected
+    $role->permissions()->sync($permissionIds);
+
+    return redirect()->route('role.index')->with('success', 'Permissions update successfully.');
+}
+
 }

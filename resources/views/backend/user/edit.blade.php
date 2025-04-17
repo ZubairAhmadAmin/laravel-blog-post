@@ -31,9 +31,11 @@
                     <div class="form-group">
                         <label for="confirm_password" class="form-lablel">User Role</label>
                         <select id="role" name="user_role" class="form-control">
-                        <option value="admin" {{$user->user_role == 'admin' ? 'selected' : ''}}>Admin</option>
-                        <option value="editor " {{$user->user_role == 'editor' ? 'selected' : ''}}>Editor</option>
-                        <option value="staff" {{$user->user_role == 'staff' ? 'selected' : ''}}>Staff</option>
+                        @foreach($roles as $role)
+                        <option value="{{ $role->id }}" {{ $user->role && $user->role->id == $role->id ? 'selected' : '' }}>
+                            {{ ucfirst($role->name) }}
+                        </option>
+                        @endforeach
                         </select>
                         @error('user_role')
                         <p class="text-danger">{{$message}}</p>

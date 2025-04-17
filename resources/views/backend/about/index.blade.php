@@ -11,7 +11,7 @@
                 <h3 class="m-0 font-weight-bold text-primary">About</h3>
             </div>
             <div class="card-body">
-                <form action="{{route('about.store')}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('about.update')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="title" class="form-lablel">Title</label>
@@ -35,7 +35,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-success float-right">Save</button>
+                        <button type="submit" class="btn btn-success float-right">update</button>
                     </div>
 
                 </form>

@@ -44,9 +44,9 @@
                     <div class="form-group">
                         <label for="confirm_password" class="form-lablel">User Role</label>
                         <select id="role" name="user_role" class="form-control">
-                        <option value="admin">Admin</option>
-                        <option value="editor">Editor</option>
-                        <option value="staff">Staff</option>
+                        @foreach($roles as $role)
+                        <option value="{{$role->id}}">{{ucfirst($role->name)}}</option>
+                        @endforeach
                         </select>
                         @error('user_role')
                         <p class="text-danger">{{$message}}</p>

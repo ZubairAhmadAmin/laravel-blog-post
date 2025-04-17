@@ -11,12 +11,11 @@
             <div class="card-header py-3">
                 <h3 class="m-0 font-weight-bold text-primary">
                     Role
+                    @if(auth()->user()->role->hasPermission('role create'))
                     <a class="btn btn-primary float-right" href="{{route('role.create')}}">Add Role</a>
+                    @endif
                 </h3>
             </div>
-            @php
-                $user = auth()->user();
-            @endphp
             <div class="card-body">
                 <div>
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -24,8 +23,8 @@
                             <tr>
                                 <th>No</th>
                                 <th>Name</th>
-                                @if(in_array($user->user_role, ['admin', 'editor']))
-                                    <th>Action</th>
+                                @if(auth()->user()->role->hasPermission(['role update', 'role delete', 'role show']))
+                                <th>Action</th>
                                 @endif
                             </tr>
                         </thead>
@@ -43,11 +42,17 @@
                             @foreach($roles as $index=>$role)
                             <tr>
                                 <td>{{($roles->currentPage() * 10) - 10 + $index + 1}}</td>
-                                <td>{{$role->name}}</td>
-                                <td>   
-                                    <a href="#" class="delete" id="{{$role->id}}"><i class="fas fa-trash"></i></a> |
-                                    <a href="{{route('role.edit', ['role'=>$role->id])}}"><i class="fas fa-edit"></i></a> |
+                                <td>{{ucfirst($role->name)}}</td>
+                                <td>
+                                    @if(auth()->user()->role->hasPermission('role delete'))
+                                    <a href="#" class="delete" id="{{$role->id}}"><i class="fas fa-trash"></i></a>
+                                    @endif
+                                    @if(auth()->user()->role->hasPermission('role update'))
+                                    <a href="{{route('role.edit', ['role'=>$role->id])}}"><i class="fas fa-edit"></i></a>
+                                    @endif
+                                    @if(auth()->user()->role->hasPermission('role show'))
                                     <a href="{{route('role.show', ['role'=>$role->id])}}"><i class="fas fa-lock"></i></a>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

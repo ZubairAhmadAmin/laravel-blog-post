@@ -14,14 +14,11 @@
                     <a class="btn btn-primary float-right" href="{{route('post.create')}}">Add Post</a>
                     <br>
                     <br>
-                    @can('forceDelete', App\Models\Post::class)
+                    @if(auth()->user()->role->hasPermission('post delete'))
                     <a class="btn btn-danger float-right" href="{{route('post.trash')}}">Trash</a>
-                    @endcan
+                    @endif
                 </h3>
             </div>
-            @php
-                $user = auth()->user();
-            @endphp
             <div class="card-body">
                 <div>
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -31,8 +28,8 @@
                                 <th>Title</th>
                                 <th>Sub Title</th>
                                 <th>Author</th>
-                                @if(in_array($user->user_role, ['admin', 'editor']))
-                                    <th>Action</th>
+                                @if(auth()->user()->role->hasAnyPermission(['post update', 'post delete']))
+                                <th>Action</th>
                                 @endif
                             </tr>
                         </thead>
@@ -58,13 +55,13 @@
                                         <em>No user</em>
                                     @endif
                                 </td>
-                                <td>    
-                                    @can('delete', $post)
-                                    <a href="#" class="delete" id="{{$post->id}}"><i class="fas fa-trash"></i></a> |
-                                    @endcan
-                                    @can('update', $post)
+                                <td>
+                                    @if(auth()->user()->role->hasPermission('post delete'))
+                                    <a href="#" class="delete" id="{{$post->id}}"><i class="fas fa-trash"></i></a>
+                                    @endif
+                                    @if(auth()->user()->role->hasPermission('post update')) 
                                     <a href="{{route('post.edit', ['post'=>$post->id])}}"><i class="fas fa-edit"></i></a>
-                                    @endcan
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

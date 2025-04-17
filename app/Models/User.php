@@ -28,6 +28,11 @@ class User extends Authenticatable
         return $this->hasManyThrough(Post::class, Profile::class);
     }
 
+    public function role() {
+        return $this->belongsTo(Role::class);
+    }
+    
+
     protected $fillable = [
         'name',
         'email',

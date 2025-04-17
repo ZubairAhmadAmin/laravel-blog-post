@@ -15,14 +15,18 @@ class AboutController extends Controller
                     ->with('about', About::first());
     }
 
-    public function store(Request $request) {
+    public function update(Request $request) {
         $request->validate([
             'title' => 'required',
             'sub_title' => 'required',
             'description' => 'required',
         ]);
 
-        About::where('id', 1)->update(['title'=>$request->title, 'sub_title'=>$request->sub_title, 'description'=>$request->description]);
+        $about = About::findOrfail(1);
+        $about->title = $request->title;
+        $about->sub_title = $request->sub_title;
+        $about->description = $request->description;
+        $about->save();
 
         Session::flash('success', 'About updated successfully!');
 

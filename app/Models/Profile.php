@@ -23,5 +23,5 @@ class Profile extends Model
         return $this->morphOne(Image::class, 'imageable');
     }
 
-    protected $fillable = ['user_id', 'bio', 'avatar'];
+    protected $fillable = ['user_id'];
 }

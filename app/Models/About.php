@@ -9,7 +9,7 @@ class About extends Model
 {
     use HasFactory;
 
-    protected $model = 'abouts';
+    protected $table = 'abouts';
 
     public $timestamps = false;
 }
