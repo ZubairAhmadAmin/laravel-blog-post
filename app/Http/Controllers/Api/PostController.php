@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PostCreateRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -25,9 +26,12 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostCreateRequest $request)
     {
-        //
+
+        $post = Post::create(['title'=>$request->title, 'sub_title'=>$request->sub_title, 'description'=>$request->description, 'slug'=>Str()->slug($request->title), 'lang'=>'en', 'profile_id'=>11]);
+        
+        return PostResource::make($post);
     }
 
     /**
@@ -38,7 +42,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        return PostResource::make(Post::findOrfail($id));
     }
 
     /**
@@ -48,9 +52,15 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostCreateRequest $request, $id)
     {
-        //
+        $post = Post::findOrfail($id);
+        $post->title = $request->title;
+        $post->sub_title = $request->sub_title;
+        $post->description = $request->description;
+        $post->save();
+
+        return PostResource::make($post);
     }
 
     /**
@@ -61,6 +71,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::findOrfail($id);
+        $post->delete();
+
+        return 'post deleted successfully!';
     }
 }

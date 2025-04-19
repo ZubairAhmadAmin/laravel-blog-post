@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PostResource extends JsonResource
+class ProfileResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +16,9 @@ class PostResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'sub_title as SubTitle' => $this->sub_title,
-            'created' => $this->created_at->diffForHumans(),
-            'topics' => TopicResource::collection($this->topics),
-            'profile' => ProfileResource::make($this->profile),
+            'pic' => $this->avatar,
+            'username' => $this->user->name,
+            'email' => $this->user->email,
         ];
     }
 }

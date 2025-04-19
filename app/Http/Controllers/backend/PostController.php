@@ -53,7 +53,7 @@ class PostController extends Controller
     {
 
         $request->validate([
-            'title' => 'required | max:50',
+            'title' => 'required | max:30',
             'sub_title' => 'required | max:50',
             'description' => 'required',
             'topic' => 'required | array',
