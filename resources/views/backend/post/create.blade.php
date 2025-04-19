@@ -23,6 +23,9 @@
                     <div class="form-group">
                         <label for="sub_title" class="form-lablel">Sub Title</label>
                         <input type="text" name="sub_title" class="form-control" placeholder="Enter post sub title">
+                        @error('sub_title')
+                        <p class="text-danger">{{$message}}</p>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="image1" class="form-lablel">Image 1</label>
