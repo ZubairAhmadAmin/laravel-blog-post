@@ -29,7 +29,7 @@ class PostController extends Controller
     public function store(PostCreateRequest $request)
     {
 
-        $post = Post::create(['title'=>$request->title, 'sub_title'=>$request->sub_title, 'description'=>$request->description, 'slug'=>Str()->slug($request->title), 'lang'=>'en', 'role_id'=>$request->role_id]);
+        $post = Post::create(['title'=>$request->title, 'sub_title'=>$request->sub_title, 'description'=>$request->description, 'slug'=>Str()->slug($request->title), 'lang'=>'en', 'profile_id'=>11]);
         
         return PostResource::make($post);
     }
